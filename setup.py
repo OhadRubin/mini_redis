@@ -18,7 +18,7 @@ setup(
     entry_points={
         #we want to use 
         'console_scripts': [
-            'mini_redis=run:main',
+            'mini_redis=mini_redis.run:main',
         ]
     },
     classifiers=[
