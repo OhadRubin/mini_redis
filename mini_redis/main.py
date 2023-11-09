@@ -32,3 +32,24 @@ def delete_key(key: str):
         del db[key]
         return {"success": True}
     return {"error": "Key not found"}
+
+
+@app.get("/exists/{key}")
+def key_exists(key: str):
+    # Check if the key exists in the database
+    return {"exists": key in db}
+
+@app.get("/keys")
+def get_keys():
+    # Return all keys in the database
+    return {"keys": list(db.keys())}
+
+@app.get("/values")
+def get_values():
+    # Return all values in the database
+    return {"values": list(db.values())}
+
+@app.get("/items")
+def get_items():
+    # Return all items in the database
+    return {"items": list(db.items())}

@@ -1,6 +1,4 @@
 import requests
-import pickle
-
 
 class MiniRedisClient:
     def __init__(self, server_url: str):
@@ -23,3 +21,23 @@ class MiniRedisClient:
         if response.status_code != 200:
             raise KeyError('Key not found')
 
+    def __contains__(self, key: str):
+        response = requests.get(f"{self.server_url}/exists/{key}")
+        return response.json()['exists']
+
+    def keys(self):
+        response = requests.get(f"{self.server_url}/keys")
+        return response.json()['keys']
+
+    def values(self):
+        response = requests.get(f"{self.server_url}/values")
+        return response.json()['values']
+
+    def items(self):
+        response = requests.get(f"{self.server_url}/items")
+        return response.json()['items']
+
+    def clear(self):
+        response = requests.delete(f"{self.server_url}/clear")
+        if response.status_code != 200:
+            raise Exception('Failed to clear database')
