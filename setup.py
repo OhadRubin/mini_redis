@@ -13,10 +13,12 @@ setup(
         'fastapi',
         'uvicorn',
         'requests',  # If your client is part of the package and requires requests
+        "fire",
     ],
     entry_points={
+        #we want to use 
         'console_scripts': [
-            'start_mini_redis=mini_redis.run:main',
+            'mini_redis=run:main',
         ]
     },
     classifiers=[
