@@ -14,6 +14,11 @@ setup(
         'uvicorn',
         'requests',  # If your client is part of the package and requires requests
     ],
+    entry_points={
+        'console_scripts': [
+            'start_mini_redis=my_mini_redis.run:main',
+        ]
+    },
     classifiers=[
         'Programming Language :: Python :: 3',
         'License :: OSI Approved :: MIT License',
