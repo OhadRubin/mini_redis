@@ -1,5 +1,5 @@
 from typing import Union, Any
-from fastapi import FastAPI
+from fastapi import FastAPI,Request
 
 app = FastAPI()
 
@@ -8,9 +8,11 @@ db = {}
 
 
 @app.post("/set/{key}")
-def set_key(key: str, value: bytes):
+async def set_key(key: str, request: Request):
+    body = await request.body()
+    # print(key,value)
     # Store the value at the given key
-    db[key] = value
+    db[key] = body
     return {"success": True}
 
 
