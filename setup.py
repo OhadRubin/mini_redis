@@ -1,5 +1,6 @@
 from setuptools import setup, find_packages
 
+# python3 -m pip install --force-reinstall --no-deps git+https://github.com/OhadRubin/mini_redis
 setup(
     name='mini_redis',
     version='0.1.0',
