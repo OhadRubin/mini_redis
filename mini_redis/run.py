@@ -85,10 +85,10 @@ def start(host: str = "0.0.0.0", port: int = 8000, reload: bool = False, workers
         print("Daemon already running")
         sys.exit(0)
     daemonize()
-    run("mini_redis.main:app", host=host, port=port, reload=reload,log_config=LOGGING_CONFIG)
+    run("mini_redis.main:app", host=host, port=port, reload=reload,log_config=LOGGING_CONFIG, workers=workers)
 
 def run_server(host: str = "0.0.0.0", port: int = 8000, reload: bool = False, workers: Optional[int] = None):
-    run("mini_redis.main:app", host=host, port=port, reload=reload,log_config=LOGGING_CONFIG)
+    run("mini_redis.main:app", host=host, port=port, reload=reload,log_config=LOGGING_CONFIG, workers=workers)
     
 def stop():
     try:
