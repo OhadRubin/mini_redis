@@ -79,15 +79,15 @@ def daemonize():
         f.write(str(os.getpid()))
     logging.info("Daemon started")
 
-
-def start(host: str = "0.0.0.0", port: int = 8000, reload: bool = False):
+from typing import Optional
+def start(host: str = "0.0.0.0", port: int = 8000, reload: bool = False, workers: Optional[int] = None):
     if os.path.exists("/tmp/mini_redis/mini_redis.pid"):
         print("Daemon already running")
         sys.exit(0)
     daemonize()
     run("mini_redis.main:app", host=host, port=port, reload=reload,log_config=LOGGING_CONFIG)
 
-def run_server(host: str = "0.0.0.0", port: int = 8000, reload: bool = False):
+def run_server(host: str = "0.0.0.0", port: int = 8000, reload: bool = False, workers: Optional[int] = None):
     run("mini_redis.main:app", host=host, port=port, reload=reload,log_config=LOGGING_CONFIG)
     
 def stop():
