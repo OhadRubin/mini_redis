@@ -83,7 +83,7 @@ def daemonize():
 def start(host: str = "0.0.0.0", port: int = 8000, reload: bool = False):
     if os.path.exists("/tmp/mini_redis/mini_redis.pid"):
         print("Daemon already running")
-        sys.exit(1)
+        sys.exit(0)
     daemonize()
     run("mini_redis.main:app", host=host, port=port, reload=reload,log_config=LOGGING_CONFIG)
 
