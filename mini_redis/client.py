@@ -44,7 +44,7 @@ class MiniRedisClient:
 
     def items(self):
         response = requests.get(f"{self.server_url}/items")
-        return {k:json.loads(v) for k,v in response.json()['items']}
+        return [(k,json.loads(v)) for k,v in response.json()['items']]
 
     def clear(self):
         response = requests.delete(f"{self.server_url}/clear")
