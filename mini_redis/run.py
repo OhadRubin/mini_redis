@@ -6,16 +6,53 @@ from uvicorn import run
 import fire
 from functools import partial
 import logging
+
+LOGGING_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {
+            "()": "uvicorn.logging.DefaultFormatter",
+            "fmt": "%(asctime)s [%(levelname)s]: %(message)s",
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+            "use_colors": None,
+        },
+        "access": {
+            "()": "uvicorn.logging.AccessFormatter",
+            "fmt": '%(asctime)s [%(levelname)s]: %(client_addr)s - "%(request_line)s" %(status_code)s',  # noqa: E501
+            "datefmt": "%Y-%m-%d %H:%M:%S",
+        },
+    },
+    "handlers": {
+        "default": {
+            "formatter": "default",
+            "class": "logging.FileHandler",
+            "filename": "/tmp/mini_redis/mini_redis.log",
+        },
+        "access": {
+            "formatter": "access",
+            "class": "logging.FileHandler",
+            "filename": "/tmp/mini_redis/mini_redis.log",
+        },
+    },
+    "loggers": {
+        "uvicorn": {"handlers": ["default"], "level": "INFO", "propagate": False},
+        "uvicorn.error": {"level": "INFO"},
+        "uvicorn.access": {"handlers": ["access"], "level": "INFO", "propagate": False},
+    },
+}
+
+if not os.path.exists("/tmp/mini_redis"):
+    os.makedirs("/tmp/mini_redis")
 logging.basicConfig(
-    filename="mini_redis.log",
+    filename="/tmp/mini_redis/mini_redis.log",
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s]: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 # run.py
 
-if not os.path.exists("/tmp/mini_redis"):
-    os.makedirs("/tmp/mini_redis")
+
 def daemonize():
     pid = os.fork()
     if pid > 0:
@@ -48,10 +85,10 @@ def start(host: str = "0.0.0.0", port: int = 8000, reload: bool = False):
         print("Daemon already running")
         sys.exit(1)
     daemonize()
-    run("mini_redis.main:app", host=host, port=port, reload=reload)
+    run("mini_redis.main:app", host=host, port=port, reload=reload,log_config=LOGGING_CONFIG)
 
 def run_server(host: str = "0.0.0.0", port: int = 8000, reload: bool = False):
-    run("mini_redis.main:app", host=host, port=port, reload=reload)
+    run("mini_redis.main:app", host=host, port=port, reload=reload,log_config=LOGGING_CONFIG)
     
 def stop():
     try:
@@ -69,7 +106,6 @@ def stop():
 
 
 def main():
-    #if /tmp/mini_redis doesn't exist, create it
     fire.Fire()
 
 

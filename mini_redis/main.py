@@ -1,7 +1,10 @@
 from typing import Union, Any
 from fastapi import FastAPI,Request
+import os
 
 app = FastAPI()
+
+
 
 # This will act as our in-memory 'database'
 db = {}
