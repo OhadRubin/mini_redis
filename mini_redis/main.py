@@ -53,3 +53,9 @@ def get_values():
 def get_items():
     # Return all items in the database
     return {"items": list(db.items())}
+
+@app.delete("/clear")
+def clear_db():
+    # Clear the database
+    db.clear()
+    return {"success": True}
