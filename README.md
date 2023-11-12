@@ -35,10 +35,14 @@ pip install -e .
 To start the server, use the following command:
 
 ```bash
-uvicorn mini_redis.main:app --reload --host 0.0.0.0 
+mini_redis start
+
+# uvicorn mini_redis.main:app --reload --host 0.0.0.0 
 ```
 
 The server will start running on `http://127.0.0.1:8000`.
+
+mini_redis stop
 
 
 ### Alternatively:
