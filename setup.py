@@ -15,6 +15,10 @@ setup(
         'uvicorn',
         'requests',  # If your client is part of the package and requires requests
         "fire",
+        "sqlitedict == 2.0.0",
+        "filelock == 3.8.0",
+
+
     ],
     entry_points={
         #we want to use 
